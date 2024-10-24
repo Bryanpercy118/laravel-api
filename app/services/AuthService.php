@@ -14,6 +14,7 @@ class AuthService
     
     public function register(array $data)
     {
+       
         $validator = Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

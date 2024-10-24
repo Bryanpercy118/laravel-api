@@ -34,9 +34,21 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        $task = $this->taskService->updateTask($task, $request->all());
+        //dd($task);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+    
+        // Asegurarse de que el usuario autenticado es el dueño de la tarea
+        if ($task->user_id !== auth()->id()) {
+            return response()->json(['message' => 'No tienes permiso para actualizar esta tarea.'], 403);
+        }
+    
+        $task = $this->taskService->updateTask($task, $validated);
         return response()->json($task);
     }
+    
 
     public function destroy(Task $task)
     {

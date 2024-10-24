@@ -14,6 +14,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'userProfile']); 
 
     
-    Route::resource('tasks', [TaskController::class]); 
-   
+    Route::resource('tasks', TaskController::class); 
+    
 });
